@@ -1,0 +1,14 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-[var(--color-rule)]">
+  <div class="mx-auto flex max-w-screen-2xl flex-col items-start justify-between gap-6 px-6 py-10 md:flex-row md:items-center md:px-10">
+    <p class="font-[family-name:var(--font-display)] text-lg">Ross — Photography</p>
+    <div class="flex flex-col gap-1 text-xs uppercase tracking-[var(--tracking-eyebrow)] text-[var(--color-muted)] md:flex-row md:gap-6">
+      <a href="/contact" class="hover:text-[var(--color-ink)]">Contact</a>
+      <a href="https://instagram.com" rel="noopener noreferrer me" class="hover:text-[var(--color-ink)]">Instagram</a>
+      <span>© {year} Ross. All rights reserved.</span>
+    </div>
+  </div>
+</footer>

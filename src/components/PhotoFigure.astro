@@ -1,0 +1,43 @@
+---
+import { Image, getImage } from "astro:assets";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+
+// Pre-resolve a high-res version so PhotoSwipe knows the dimensions.
+const full = await getImage({
+  src,
+  width: 2400,
+  format: "avif",
+  quality: 82,
+});
+---
+
+<figure class="my-8">
+  <a
+    href={full.src}
+    data-pswp-width={full.attributes.width ?? src.width}
+    data-pswp-height={full.attributes.height ?? src.height}
+    target="_blank"
+    rel="noopener"
+    class="block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-ink)]"
+  >
+    <Image
+      src={src}
+      alt={alt}
+      widths={[640, 1024, 1600, 2400]}
+      sizes="(min-width: 1280px) 1100px, 100vw"
+      format="avif"
+      quality={78}
+      class="w-full"
+    />
+  </a>
+  {caption && (
+    <figcaption class="eyebrow mt-3">{caption}</figcaption>
+  )}
+</figure>

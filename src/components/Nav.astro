@@ -1,0 +1,40 @@
+---
+const pathname = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+const links = [
+  { href: "/galleries", label: "Galleries" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+---
+
+<header class="sticky top-0 z-40 bg-[color-mix(in_srgb,var(--color-paper)_92%,transparent)] backdrop-blur-sm">
+  <nav class="mx-auto flex max-w-screen-2xl items-center justify-between px-6 py-5 md:px-10">
+    <a
+      href="/"
+      class="font-[family-name:var(--font-display)] text-xl tracking-tight"
+      aria-label="Home"
+    >
+      Ross
+    </a>
+    <ul class="flex items-center gap-7 text-xs uppercase tracking-[var(--tracking-eyebrow)]">
+      {links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            class:list={[
+              "transition-opacity hover:opacity-60",
+              isActive(l.href) ? "opacity-100" : "opacity-70",
+            ]}
+            aria-current={isActive(l.href) ? "page" : undefined}
+          >
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+  <hr class="rule mx-6 md:mx-10" />
+</header>

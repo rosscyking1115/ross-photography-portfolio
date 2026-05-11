@@ -1,0 +1,49 @@
+---
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import Base from "../layouts/Base.astro";
+
+const entries = (await getCollection("galleries", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const cards = entries.map((g) => ({
+  href: `/galleries/${g.id}`,
+  cover: g.data.cover,
+  title: g.data.title,
+  year: g.data.date.getFullYear(),
+}));
+---
+
+<Base title="Ross — Photography">
+  <section class="mx-auto max-w-screen-2xl px-6 pb-20 pt-14 md:px-10 md:pt-20">
+    <p class="eyebrow">Photography</p>
+    <h1 class="mt-3 font-[family-name:var(--font-display)] text-6xl tracking-tight md:text-8xl">
+      Ross
+    </h1>
+    <p class="prose-narrow mt-6 text-lg text-[var(--color-ink-2)]">
+      Selected photographic work — landscapes, long-form documentary, and quiet places.
+    </p>
+
+    <div class="mt-14 grid grid-cols-1 gap-x-8 gap-y-16 md:grid-cols-2">
+      {cards.map((c) => (
+        <a href={c.href} class="group block">
+          <div class="overflow-hidden bg-[var(--color-paper-2)]">
+            <Image
+              src={c.cover}
+              alt={c.title}
+              widths={[640, 1024, 1600]}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              format="avif"
+              quality={78}
+              class="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+            />
+          </div>
+          <div class="mt-4 flex items-baseline justify-between gap-4">
+            <h3 class="font-[family-name:var(--font-display)] text-2xl tracking-tight">{c.title}</h3>
+            <span class="eyebrow whitespace-nowrap">{c.year}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

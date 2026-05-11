@@ -1,0 +1,43 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  gallery: CollectionEntry<"galleries">;
+  /** Render an emphasized "featured" card with larger type. */
+  featured?: boolean;
+}
+
+const { gallery, featured = false } = Astro.props;
+const { title, cover, date, location } = gallery.data;
+const year = date.getFullYear();
+---
+
+<a
+  href={`/galleries/${gallery.id}`}
+  class="group block"
+  aria-label={`Open gallery: ${title}`}
+>
+  <div class="overflow-hidden bg-[var(--color-paper-2)]">
+    <Image
+      src={cover}
+      alt={`${title} — cover image`}
+      widths={[640, 1024, 1600]}
+      sizes="(min-width: 1024px) 50vw, 100vw"
+      format="avif"
+      quality={78}
+      class="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+    />
+  </div>
+  <div class="mt-4 flex items-baseline justify-between gap-4">
+    <h3
+      class:list={[
+        "font-[family-name:var(--font-display)] tracking-tight",
+        featured ? "text-3xl md:text-4xl" : "text-2xl",
+      ]}
+    >
+      {title}
+    </h3>
+    <span class="eyebrow whitespace-nowrap">{year}{location ? ` · ${location}` : ""}</span>
+  </div>
+</a>
