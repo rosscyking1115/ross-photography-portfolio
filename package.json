@@ -12,6 +12,9 @@
     "ci": "pnpm check && pnpm build",
     "astro": "astro"
   },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240725.0"
+  },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/sitemap": "^3.2.1",
